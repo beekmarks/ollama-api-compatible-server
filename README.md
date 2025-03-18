@@ -8,6 +8,7 @@ This project provides an Ollama API-compatible server that uses the `llama-cpp-p
 - **Local Inference**: Uses `llama-cpp-python` to run inference on local GGUF model files
 - **Model Management**: Implements a model caching system to avoid reloading models
 - **Configurable Parameters**: Supports various inference parameters (temperature, max tokens, etc.)
+- **Web UI**: Includes a simple web interface for chatting with the model and generating text
 
 ## Requirements
 
@@ -93,6 +94,18 @@ The server implements the following Ollama-compatible endpoints:
 - **POST /api/generate**: Generate text completions
 - **POST /api/chat**: Handle chat-based interactions
 - **GET /api/version**: Get the server version
+
+## Web UI
+
+The project includes a simple web interface for interacting with your models:
+
+- **Access**: Simply navigate to `http://localhost:11435/` in your browser after starting the server
+- **Features**:
+  - **Chat Tab**: Have conversational interactions with the model
+  - **Generate Tab**: Create text completions with adjustable parameters
+  - **Model Info**: View information about the loaded model
+
+The web UI automatically connects to the API endpoints and provides a user-friendly way to interact with your models without needing to use command-line tools or write code.
 
 ## Usage Examples
 
