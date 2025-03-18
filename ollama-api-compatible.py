@@ -1,5 +1,7 @@
 # ollama-api-compatible.py
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Dict, Any, Optional, Union
 from llama_cpp import Llama
@@ -8,6 +10,7 @@ import logging
 import json
 import time
 import os
+from fastapi.responses import RedirectResponse
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -15,6 +18,23 @@ logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI(title="Ollama API Compatible Server")
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+# Mount static files
+app.mount("/ui", StaticFiles(directory="static", html=True), name="static")
+
+# Root redirect to UI
+@app.get("/")
+async def redirect_to_ui():
+    return RedirectResponse(url="/ui/")
 
 # Model configuration
 MODEL_PATH = "/Users/stephenmccall/Desktop/ollama-server/Llama-3.2-3B-Instruct-Q4_K_M.gguf"  # Updated with actual model path
